@@ -95,47 +95,6 @@ const fetchReviews = (postId) => {
         .catch(error => console.error('Error fetching reviews:', error));
 };
 
-// const postcomment = (productId) => {
-//     const reviewForm = document.getElementById("reviewForm");
-//     reviewForm.addEventListener("submit", function (event) {
-//         event.preventDefault();
-
-        
-//         const body = document.getElementById("reviewBody").value;
-//         const rating = document.getElementById("reviewRating").value;
-
-//         const reviewData = {
-//             reviewer: reviewer,
-//             body: body,
-//             rating: rating,
-//             product: productId
-//         };
-//         const token = localStorage.getItem("authToken");
-//         fetch(`http://127.0.0.1:8000/product/review/`, {
-        
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-
-//             },
-//             body: JSON.stringify(reviewData)
-//         })
-//             .then(response => {
-//                 if (response.ok) {
-//                     return response.json();
-//                 } else {
-//                     throw new Error('Something went wrong');
-//                 }
-//             })
-//             .then(data => {
-//                 console.log("Review submitted:", data);
-//                 fetchReviews(productId);
-//                 reviewForm.reset();
-//             })
-//             .catch(error => console.error('Error:', error));
-//     });
-// };
 
 const postcomment = (productId) => {
     const reviewForm = document.getElementById("reviewForm");
