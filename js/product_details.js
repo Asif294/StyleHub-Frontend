@@ -65,7 +65,7 @@ const getProductDetail = () => {
                     `;
 
                     fetchReviews(postId);
-                    post_comment(postId);
+                    // postcomment(postId);
                 })
                 .catch(error => console.error('Error fetching brand:', error));
         })
@@ -96,33 +96,30 @@ const fetchReviews = (postId) => {
 };
 
 
-const postcomment = (productId) => {
+const postcomment = () => {
     const reviewForm = document.getElementById("reviewForm");
+    const postId = getQueryParams("id");
 
+    const authUser = JSON.parse(localStorage.getItem("user_id"));
     reviewForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
         const body = document.getElementById("reviewBody").value;
         const rating = document.getElementById("reviewRating").value;
-        
-        console.log("hello");
-
-        const reviewData = {
-            reviewer: reviewer,
-            body: body,
-            rating: rating,
-            product: productId
-        };
-        console.log(reviewData);
-
+    
         const token = localStorage.getItem("authToken");
-        fetch(`http://127.0.0.1:8000/product/review/?product=${productId}/`, {
+        fetch(`http://127.0.0.1:8000/product/review/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Token ${token}`,  
             },
-            body: JSON.stringify(reviewData)
+            body: JSON.stringify({
+                reviewer: authUser,
+                body: body,
+                rating: rating,
+                product: postId
+            })
         })
         .then(response => {
             if (response.ok) {
@@ -133,12 +130,16 @@ const postcomment = (productId) => {
         })
         .then(data => {
             console.log("Review submitted:", data);
-            fetchReviews(productId);
+            fetchReviews(postId);
             reviewForm.reset();
         })
         .catch(error => console.error('Error:', error));
     });
 };
+
+postcomment();
+
+
 
 
 getProductDetail();
