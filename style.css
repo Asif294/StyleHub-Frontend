@@ -1,5 +1,6 @@
 
 
+
 .img-con{
   height: 60px;
   width: 60px;
@@ -41,4 +42,18 @@ html, body, label {
 
   margin-left: 400px;
   
+}
+.nodata{
+   margin-left: 300px;
+   
+}
+
+
+.fa-cart-shopping{
+  font-size: larger;
+ 
+  margin-top: 9px;
+}
+.dynamic-count{
+  margin-right: 40px;
 }

@@ -1,11 +1,30 @@
+
+let renderCardData=document.querySelector(".renderCardData")
+let  dynamic_count=document.querySelector(".dynamic-count");
+
 const getallproduct = (searchQuery = '') => {
     fetch(`http://127.0.0.1:8000/product/product/?search=${searchQuery}`)
     .then((res) => res.json())
-    .then((products) => {
+    .then((products) => { 
+       
         const allProduct = document.getElementById("all-product");
-        allProduct.innerHTML = ''; 
+        console.log(products.length)
+        if(products.length==0){
+            console.log("insiteif")
+            allProduct.innerHTML =`
+            
+            <div  class="nodata" >
+        
+            <img class="nodatas" src="./image/nodata.jpg" alt="no data found">
 
-        products.forEach(product => {
+           </div>
+            `
+            return ;
+        }
+       
+        else{
+            allProduct.innerHTML = ''; 
+        products.forEach((product,key)  => {
             const div = document.createElement("div");
             div.innerHTML = `
                 <div class="card-c bg-white rounded-lg">
@@ -26,26 +45,20 @@ const getallproduct = (searchQuery = '') => {
                             </a>
                             <a href="./product_details.html?id=${product.id}" class="text-black bg-green-600 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-800">Details</a>
                         </div>
-                        <a hraf="#">
-                            <h1 style="width: 150px;" class="mt-2 p-2 ml-14 rounded-2xl text-m bg-black text-white cursor-pointer text-center h-10">Add to card</h1>
-                        </a>
+                        
+                           <button id="add-to-${key}" style="width: 150px;" onclick="addToCard(${product.id}, '${product.image}', '${product.title}','${product.price}')" class="mt-2 p-2 ml-14 rounded-2xl text-m bg-black text-white cursor-pointer text-center h-10">Add to Cart</button>
+                        
                     </div>
                 </div>
             `;
+
             allProduct.appendChild(div);
         });
+        }
     });
 };
 
-const lodeProduct=(search)=>{
-    const allProduct = document.getElementById("all-product");
-    console.log(search)
-    fetch(`http://127.0.0.1:8000/product/product/?search=${search ? search:""}`)
-    .then((res)=> res.json())
-    .then((data)=>{
-        getallproduct(data?.results);
-    });
-};
+
 
 const handleSearch = () => {
     const searchInput = document.getElementById('search').value;
@@ -61,7 +74,7 @@ const lodeColor = () => {
             const div = document.createElement("div");
             div.innerHTML = `
                 <ul class="mt- ">
-                    <button onclick="lodeProduct('${item.color}')" class="btn btn-secondary m-1">${item.color}</button>
+                    <button onclick="getallproduct('${item.color}')" class="btn btn-success bg-gray-500   m-1">${item.color}</button>
                  </ul>
             `;
             parent.appendChild(div);
@@ -78,7 +91,7 @@ const lodeSize = () => {
             const div = document.createElement("div");
             div.innerHTML = `
                 <ul class="mt- ">
-                    <button onclick="lodeProduct('${item.size}')" class="btn btn-secondary m-1">${item.size}</button>
+                    <button onclick="getallproduct('${item.size}')" class="btn btn-success bg-gray-500  m-1">${item.size}</button>
                  </ul>
             `;
             parent.appendChild(div);
@@ -97,3 +110,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault(); 
     handleSearch();
 });
+
+
+

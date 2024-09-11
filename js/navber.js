@@ -7,6 +7,12 @@ fetch("navber.html")
         const token = localStorage.getItem("authToken");
         if (token){
             navElement.innerHTML += `
+            
+             <a href="cart.html">
+           <i class="fa-solid fa-cart-shopping"></i>
+              <sup class="dynamic-count">0</sup>
+             </a>
+             
              <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="profile.html">Profile</a>
             <a class="cursor-pointer hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" onclick="handleLogout()">Log Out</a>
             
