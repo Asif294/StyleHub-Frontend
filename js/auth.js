@@ -85,6 +85,7 @@ const handleLogin = (event) => {
 
   const handleLogout =() =>{
     const token=localStorage.getItem("authToken");
+    const authUser = JSON.parse(localStorage.getItem("user_id"));
     fetch("http://127.0.0.1:8000/user/logout/",{
       method :"GET",
       headers:{
@@ -96,6 +97,7 @@ const handleLogin = (event) => {
     .then(res=>{
        if (res.ok){
         localStorage.removeItem("authToken");
+        localStorage.removeItem("user_id")
         window.location.href="./index.html";
        }
     })
